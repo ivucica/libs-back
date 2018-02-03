@@ -636,7 +636,7 @@ if test x"$BUILD_GRAPHICS" = "xcairo"; then
       CAIRO_CFLAGS="$CAIRO_CFLAGS $CAIRO_XLIB_CFLAGS"
       AC_MSG_RESULT(xlib)
     elif test $BUILD_SERVER = wayland; then
-      CAIRO_LIBS="$CAIRO_LIBS $XFT_LIBS"
+      CAIRO_LIBS="$CAIRO_LIBS $XFT_LIBS -lwayland-client"
       CAIRO_CFLAGS="$CAIRO_CFLAGS"
     else
       AC_MSG_ERROR([Invalid Cairo installation])

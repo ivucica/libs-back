@@ -1,3 +1,24 @@
+2018-02-03  Ivan Vucica <ivan@vucica.net>
+
+	* configure.ac
+	* config.h.in
+	* configure
+	* Source/wayland/xdg-shell-unstable-v5-protocol.c
+	* Source/wayland/WalyandServer.m
+	* Source/wayland/GNUmakefile.preamble
+	* Source/wayland/GNUmakefile
+	* Source/cairo/WaylandCairoSurface.m
+	* Source/cairo/GNUmakefile
+	* Source/cairo/CairoGState.m
+	* Source/cairo/CairoFontInfo.m
+	* Source/cairo/CairoContext.m
+	* Source/GSBackend.m
+	* Headers/Wayland/xdg-shell-unstable-v5-client-protocol.h
+	* Headers/wayland/WaylandServer.h
+	* Headers/cairo/WaylandCairoSurface.h:
+	Dirty Wayland backend implementation.
+	Patch by Sergio L. Pascual <sergiolpascual@flexvdi.com>
+
 2018-01-21  Yavor Doganov  <yavor@gnu.org>
 
 	* configure.ac: Add FREETYPE_LIBS to LIBS when building xlib.
