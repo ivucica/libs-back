@@ -1,3 +1,19 @@
+2018-02-20  Ivan Vucica <ivan@vucica.net>
+
+	* Source/wayland/xdg-shell-unstable-v5-protocol.c
+	* Headers/Wayland/xdg-shell-unstable-v5-client-protocol.h:
+	Regenerate wayland interface using wayland-scanner.
+
+	$ wayland-scanner client-header \
+	    /usr/share/wayland-protocols/unstable/xdg-shell/xdg-shell-unstable-v5.xml \
+	    xdg-shell-unstable-v5-client-protocol.h
+	$ wayland-scanner code \
+	    /usr/share/wayland-protocols/unstable/xdg-shell/xdg-shell-unstable-v5.xml \
+	    xdg-shell-unstable-v5-protocol.c
+
+	On Debian, xdg-shell-unstable-v5.xml ships in wayland-protocols and
+	wayland-scanner ships in libwayland-bin.
+
 2018-02-03  Ivan Vucica <ivan@vucica.net>
 
 	* configure.ac
