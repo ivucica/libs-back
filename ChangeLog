@@ -14,13 +14,24 @@
 	On Debian, xdg-shell-unstable-v5.xml ships in wayland-protocols and
 	wayland-scanner ships in libwayland-bin.
 
+	* configure.ac
+	* configure:
+	Add user-friendly checks for headers and libraries required for wayland
+	server.
+
+	* Source/wayland/WaylandServer.m:
+	Regenerated interface does not have xdg_shell_get_xdg_surface_special.
+	As it seems exceedingly difficult to find documenatation on what that
+	is, it's been replaced with a call to xdg_shell_get_xdg_surface.
+	However, now there is no window type being passed based on the mask.
+
 2018-02-03  Ivan Vucica <ivan@vucica.net>
 
 	* configure.ac
 	* config.h.in
 	* configure
 	* Source/wayland/xdg-shell-unstable-v5-protocol.c
-	* Source/wayland/WalyandServer.m
+	* Source/wayland/WaylandServer.m
 	* Source/wayland/GNUmakefile.preamble
 	* Source/wayland/GNUmakefile
 	* Source/cairo/WaylandCairoSurface.m

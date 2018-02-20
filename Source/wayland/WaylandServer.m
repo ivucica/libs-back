@@ -1001,18 +1001,20 @@ int NSToWayland(struct window *window, int ns_y)
     }
     */
 
+    // TODO(ivucica): Make use of the window mask. The use was removed, as
+    // it was unclear what xdg_shell_get_xdg_surface_special(), and it does not
+    // seem to exist in the published v5 protocol.
     if (style & NSMainMenuWindowMask) {
 	window->xdg_surface =
-	    xdg_shell_get_xdg_surface_special(wlconfig->xdg_shell, wlsurface, 2);
+	    xdg_shell_get_xdg_surface(wlconfig->xdg_shell, wlsurface);
 	NSDebugLog(@"window id=%d will be a panel", wlconfig->last_window_id);
     }
     else if (style & NSBackgroundWindowMask)
 	window->xdg_surface =
-	    xdg_shell_get_xdg_surface_special(wlconfig->xdg_shell, wlsurface, 1);
+	    xdg_shell_get_xdg_surface(wlconfig->xdg_shell, wlsurface);
     else
 	window->xdg_surface =
-	    xdg_shell_get_xdg_surface_special(wlconfig->xdg_shell, wlsurface, 0);
-
+	    xdg_shell_get_xdg_surface(wlconfig->xdg_shell, wlsurface);
 
     xdg_surface_set_user_data(window->xdg_surface, window);
     xdg_surface_add_listener(window->xdg_surface,
