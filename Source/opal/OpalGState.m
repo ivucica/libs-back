@@ -57,7 +57,7 @@ static inline NSPoint _NSPointFromCGPoint(CGPoint cgpoint)
 
 - (id)copyWithZone: (NSZone *)zone
 {
-  NSDebugLLog(@"OpalGState", @"%p (%@): %s", self, [self class], __PRETTY_FUNCTION__);
+  NSDebugLLog(@"OpalGState", @"%p (%@): %s -- cgctx %p", self, [self class], __PRETTY_FUNCTION__, CGCTX);
   OpalGState * theCopy = (OpalGState *) [super copyWithZone: zone];
   CGContextRef cgctx = CGCTX;
 
@@ -100,7 +100,7 @@ static inline NSPoint _NSPointFromCGPoint(CGPoint cgpoint)
 
 - (void) DPSsetgray: (CGFloat)gray
 {
-  NSDebugLLog(@"OpalGState", @"%p (%@): %s", self, [self class], __PRETTY_FUNCTION__);
+  NSDebugLLog(@"OpalGState", @"%p (%@): %s -- cgctx %p", self, [self class], __PRETTY_FUNCTION__, CGCTX);
   CGContextRef cgctx = CGCTX;
 
   const CGFloat alpha = 1.0; // TODO: is this correct?
@@ -114,7 +114,7 @@ static inline NSPoint _NSPointFromCGPoint(CGPoint cgpoint)
 
 - (void) DPSsetrgbcolor: (CGFloat)r : (CGFloat)g : (CGFloat)b
 {
-  NSDebugLLog(@"OpalGState", @"%p (%@): %s", self, [self class], __PRETTY_FUNCTION__);
+  NSDebugLLog(@"OpalGState", @"%p (%@): %s -- cgctx %p", self, [self class], __PRETTY_FUNCTION__, CGCTX);
   CGContextRef cgctx = CGCTX;
 
   const CGFloat alpha = 1.0; // TODO: is this correct?
@@ -128,7 +128,7 @@ static inline NSPoint _NSPointFromCGPoint(CGPoint cgpoint)
 
 - (void) DPSsetcmykcolor: (CGFloat)c : (CGFloat)m : (CGFloat)y : (CGFloat)k
 {
-  NSDebugLLog(@"OpalGState", @"%p (%@): %s", self, [self class], __PRETTY_FUNCTION__);
+  NSDebugLLog(@"OpalGState", @"%p (%@): %s -- cgctx %p", self, [self class], __PRETTY_FUNCTION__, CGCTX);
   CGContextRef cgctx = CGCTX;
 
   const CGFloat alpha = 1.0; // TODO: is this correct?
@@ -143,7 +143,7 @@ static inline NSPoint _NSPointFromCGPoint(CGPoint cgpoint)
 
 - (void) DPSshow: (const char *)s
 {
-  NSDebugLLog(@"OpalGState", @"%p (%@): %s", self, [self class], __PRETTY_FUNCTION__);
+  NSDebugLLog(@"OpalGState", @"%p (%@): %s -- cgctx %p", self, [self class], __PRETTY_FUNCTION__, CGCTX);
   CGContextRef cgctx = CGCTX;
 
   if (cgctx)
@@ -157,7 +157,7 @@ static inline NSPoint _NSPointFromCGPoint(CGPoint cgpoint)
 
 - (void) GSShowText: (const char *)s  : (size_t) length
 {
-  NSDebugLLog(@"OpalGState", @"%p (%@): %s", self, [self class], __PRETTY_FUNCTION__);
+  NSDebugLLog(@"OpalGState", @"%p (%@): %s -- cgctx %p", self, [self class], __PRETTY_FUNCTION__, CGCTX);
   CGContextRef cgctx = CGCTX;
 
   if (cgctx)
@@ -173,7 +173,7 @@ static inline NSPoint _NSPointFromCGPoint(CGPoint cgpoint)
 - (void) GSSetFont: (GSFontInfo *)fontref
 {
   const CGFloat * matrix;
-  NSDebugLLog(@"OpalGState", @"%p (%@): %s", self, [self class], __PRETTY_FUNCTION__);
+  NSDebugLLog(@"OpalGState", @"%p (%@): %s -- cgctx %p", self, [self class], __PRETTY_FUNCTION__, CGCTX);
   [super GSSetFont: fontref];
 
   CGContextRef cgctx = CGCTX;
@@ -194,7 +194,7 @@ static inline NSPoint _NSPointFromCGPoint(CGPoint cgpoint)
 - (void) GSShowGlyphsWithAdvances: (const NSGlyph *)glyphs : (const NSSize *)advances : (size_t) length
 {
   size_t i;
-  NSDebugLLog(@"OpalGState", @"%p (%@): %s", self, [self class], __PRETTY_FUNCTION__);
+  NSDebugLLog(@"OpalGState", @"%p (%@): %s -- cgctx %p", self, [self class], __PRETTY_FUNCTION__, CGCTX);
 
   CGContextRef cgctx = CGCTX;
 
@@ -219,7 +219,7 @@ static inline NSPoint _NSPointFromCGPoint(CGPoint cgpoint)
 
 - (NSPoint) currentPoint
 {
-  NSDebugLLog(@"OpalGState", @"%p (%@): %s", self, [self class], __PRETTY_FUNCTION__);
+  NSDebugLLog(@"OpalGState", @"%p (%@): %s -- cgctx %p", self, [self class], __PRETTY_FUNCTION__, CGCTX);
   CGContextRef cgctx = CGCTX;
 
   if (cgctx)
@@ -237,7 +237,7 @@ static inline NSPoint _NSPointFromCGPoint(CGPoint cgpoint)
                    : (NSInteger)size
                    : (CGFloat)dashOffset
 {
-  NSDebugLLog(@"OpalGState", @"%p (%@): %s", self, [self class], __PRETTY_FUNCTION__);
+  NSDebugLLog(@"OpalGState", @"%p (%@): %s -- cgctx %p", self, [self class], __PRETTY_FUNCTION__, CGCTX);
 
   CGContextRef cgctx = CGCTX;
 
@@ -249,7 +249,7 @@ static inline NSPoint _NSPointFromCGPoint(CGPoint cgpoint)
 
 - (void) DPSsetlinecap: (int)linecap
 {
-  NSDebugLLog(@"OpalGState", @"%p (%@): %s", self, [self class], __PRETTY_FUNCTION__);
+  NSDebugLLog(@"OpalGState", @"%p (%@): %s -- cgctx %p", self, [self class], __PRETTY_FUNCTION__, CGCTX);
 
   CGContextRef cgctx = CGCTX;
 
@@ -262,7 +262,7 @@ static inline NSPoint _NSPointFromCGPoint(CGPoint cgpoint)
 
 - (void) DPSsetlinejoin: (int)linejoin
 {
-  NSDebugLLog(@"OpalGState", @"%p (%@): %s", self, [self class], __PRETTY_FUNCTION__);
+  NSDebugLLog(@"OpalGState", @"%p (%@): %s -- cgctx %p", self, [self class], __PRETTY_FUNCTION__, CGCTX);
   CGContextRef cgctx = CGCTX;
 
   if (cgctx)
@@ -273,7 +273,7 @@ static inline NSPoint _NSPointFromCGPoint(CGPoint cgpoint)
 
 - (void) DPSsetlinewidth: (CGFloat) width
 {
-  NSDebugLLog(@"OpalGState", @"%p (%@): %s", self, [self class], __PRETTY_FUNCTION__);
+  NSDebugLLog(@"OpalGState", @"%p (%@): %s -- cgctx %p", self, [self class], __PRETTY_FUNCTION__, CGCTX);
   CGContextRef cgctx = CGCTX;
 
   if (cgctx)
@@ -284,7 +284,7 @@ static inline NSPoint _NSPointFromCGPoint(CGPoint cgpoint)
 
 - (void) DPSsetmiterlimit: (CGFloat)miterlimit
 {
-  NSDebugLLog(@"OpalGState", @"%p (%@): %s", self, [self class], __PRETTY_FUNCTION__);
+  NSDebugLLog(@"OpalGState", @"%p (%@): %s -- cgctx %p", self, [self class], __PRETTY_FUNCTION__, CGCTX);
   CGContextRef cgctx = CGCTX;
 
   if (cgctx)
@@ -295,7 +295,7 @@ static inline NSPoint _NSPointFromCGPoint(CGPoint cgpoint)
 
 - (void) DPSsetstrokeadjust: (int) b
 {
-  NSDebugLLog(@"OpalGState", @"%p (%@): %s", self, [self class], __PRETTY_FUNCTION__);
+  NSDebugLLog(@"OpalGState", @"%p (%@): %s -- cgctx %p", self, [self class], __PRETTY_FUNCTION__, CGCTX);
 
   // TODO: Opal doesn't implement this private API of Core Graphics
 }
@@ -319,7 +319,7 @@ static inline NSPoint _NSPointFromCGPoint(CGPoint cgpoint)
 
 - (void)DPSinitmatrix
 {
-  NSDebugLLog(@"OpalGState", @"%p (%@): %s", self, [self class], __PRETTY_FUNCTION__);
+  NSDebugLLog(@"OpalGState", @"%p (%@): %s -- cgctx %p", self, [self class], __PRETTY_FUNCTION__, CGCTX);
   CGContextRef cgctx = CGCTX;
 
   if (cgctx)
@@ -368,7 +368,7 @@ static inline NSPoint _NSPointFromCGPoint(CGPoint cgpoint)
 
 - (NSAffineTransform *) GSCurrentCTM
 {
-  NSDebugLLog(@"OpalGState", @"%p (%@): %s", self, [self class], __PRETTY_FUNCTION__);
+  NSDebugLLog(@"OpalGState", @"%p (%@): %s -- cgctx %p", self, [self class], __PRETTY_FUNCTION__, CGCTX);
 
   return [super GSCurrentCTM];
 
@@ -465,7 +465,7 @@ static inline NSPoint _NSPointFromCGPoint(CGPoint cgpoint)
 
 - (void) DPSclip
 {
-  NSDebugLLog(@"OpalGState", @"%p (%@): %s", self, [self class], __PRETTY_FUNCTION__);
+  NSDebugLLog(@"OpalGState", @"%p (%@): %s -- cgctx %p", self, [self class], __PRETTY_FUNCTION__, CGCTX);
   CGContextRef cgctx = CGCTX;
 
   if (cgctx)
@@ -500,7 +500,7 @@ static inline NSPoint _NSPointFromCGPoint(CGPoint cgpoint)
 
 - (void) DPSeoclip
 {
-  NSDebugLLog(@"OpalGState", @"%p (%@): %s", self, [self class], __PRETTY_FUNCTION__);
+  NSDebugLLog(@"OpalGState", @"%p (%@): %s -- cgctx %p", self, [self class], __PRETTY_FUNCTION__, CGCTX);
   CGContextRef cgctx = CGCTX;
 
   if (cgctx)
@@ -512,7 +512,7 @@ static inline NSPoint _NSPointFromCGPoint(CGPoint cgpoint)
 
 - (void) DPSeofill
 {
-  NSDebugLLog(@"OpalGState", @"%p (%@): %s", self, [self class], __PRETTY_FUNCTION__);
+  NSDebugLLog(@"OpalGState", @"%p (%@): %s -- cgctx %p", self, [self class], __PRETTY_FUNCTION__, CGCTX);
   CGContextRef cgctx = CGCTX;
 
   if (cgctx)
@@ -524,7 +524,7 @@ static inline NSPoint _NSPointFromCGPoint(CGPoint cgpoint)
 
 - (void) DPSfill
 {
-  NSDebugLLog(@"OpalGState", @"%p (%@): %s", self, [self class], __PRETTY_FUNCTION__);
+  NSDebugLLog(@"OpalGState", @"%p (%@): %s -- cgctx %p", self, [self class], __PRETTY_FUNCTION__, CGCTX);
   CGContextRef cgctx = CGCTX;
 
   if (cgctx)
@@ -536,7 +536,7 @@ static inline NSPoint _NSPointFromCGPoint(CGPoint cgpoint)
 
 - (void) DPSinitclip
 {
-  NSDebugLLog(@"OpalGState", @"%p (%@): %s", self, [self class], __PRETTY_FUNCTION__);
+  NSDebugLLog(@"OpalGState", @"%p (%@): %s -- cgctx %p", self, [self class], __PRETTY_FUNCTION__, CGCTX);
   CGContextRef cgctx = CGCTX;
 
   if (cgctx)
@@ -673,7 +673,7 @@ static inline NSPoint _NSPointFromCGPoint(CGPoint cgpoint)
 
 - (void) DPSstroke
 {
-  NSDebugLLog(@"OpalGState", @"%p (%@): %s", self, [self class], __PRETTY_FUNCTION__);
+  NSDebugLLog(@"OpalGState", @"%p (%@): %s -- cgctx %p", self, [self class], __PRETTY_FUNCTION__, CGCTX);
   CGContextRef cgctx = CGCTX;
 
   if (cgctx)
@@ -728,7 +728,7 @@ static inline NSPoint _NSPointFromCGPoint(CGPoint cgpoint)
 
 - (NSDictionary *) GSReadRect: (NSRect)r
 {
-  NSDebugLLog(@"OpalGState", @"%p (%@): %s", self, [self class], __PRETTY_FUNCTION__);
+  NSDebugLLog(@"OpalGState", @"%p (%@): %s -- cgctx %p", self, [self class], __PRETTY_FUNCTION__, CGCTX);
   return nil;
 }
 
@@ -744,7 +744,7 @@ static inline NSPoint _NSPointFromCGPoint(CGPoint cgpoint)
                  : (NSString *)colorSpaceName
 		 : (const unsigned char *const[5])data
 {
-  NSDebugLLog(@"OpalGState", @"%p (%@): %s", self, [self class], __PRETTY_FUNCTION__);
+  NSDebugLLog(@"OpalGState", @"%p (%@): %s -- cgctx %p", self, [self class], __PRETTY_FUNCTION__, CGCTX);
   NSDebugLLog(@"OpalGState", @"         %s - %@ - cgctx %@", __PRETTY_FUNCTION__, _opalSurface, [self CGContext]);
   NSDebugLLog(@"OpalGState", @"Bits per component : bitspersample = %d", bitsPerSample);
   NSDebugLLog(@"OpalGState", @"Bits per pixel     : bitsperpixel = %d", bitsPerPixel);
@@ -856,7 +856,7 @@ static inline NSPoint _NSPointFromCGPoint(CGPoint cgpoint)
                       op: (NSCompositingOperation)op
                 fraction: (CGFloat)delta
 {
-  NSDebugLLog(@"OpalGState", @"%p (%@): %s", self, [self class], __PRETTY_FUNCTION__);
+  NSDebugLLog(@"OpalGState", @"%p (%@): %s -- cgctx %p", self, [self class], __PRETTY_FUNCTION__, CGCTX);
   CGContextRef destContexts[2] = { [_opalSurface backingCGContext], [_opalSurface x11CGContext] };
 
   /* x11 context needs to have correct ctm applied */
@@ -895,7 +895,7 @@ doesn't support to use the receiver cairo target as the source. */
   // For now, we'll just call compositeGState and live
   // with the fact that CTM is not respected.
 
-  NSDebugLLog(@"OpalGState", @"%p (%@): %s", self, [self class], __PRETTY_FUNCTION__);
+  NSDebugLLog(@"OpalGState", @"%p (%@): %s -- cgctx %p", self, [self class], __PRETTY_FUNCTION__, CGCTX);
 
   CGRect srcCGRect = CGRectMake(srcRect.origin.x, srcRect.origin.y,
                                 srcRect.size.width, srcRect.size.height);
@@ -916,7 +916,7 @@ doesn't support to use the receiver cairo target as the source. */
                  op: (NSCompositingOperation)op
            fraction: (CGFloat)delta
 {
-  NSDebugLLog(@"OpalGState", @"%p (%@): %s", self, [self class], __PRETTY_FUNCTION__);
+  NSDebugLLog(@"OpalGState", @"%p (%@): %s -- cgctx %p", self, [self class], __PRETTY_FUNCTION__, CGCTX);
   CGContextRef destContexts[2] = { [_opalSurface backingCGContext], [_opalSurface x11CGContext] };
   int i;
 
@@ -961,7 +961,7 @@ doesn't support to use the receiver cairo target as the source. */
 
 - (void) DPSinitgraphics
 {
-  NSDebugLLog(@"OpalGState", @"%p (%@): %s", self, [self class], __PRETTY_FUNCTION__);
+  NSDebugLLog(@"OpalGState", @"%p (%@): %s -- cgctx %p", self, [self class], __PRETTY_FUNCTION__, CGCTX);
 
   [super DPSinitgraphics];
   [self DPSinitmatrix];
@@ -1001,7 +1001,7 @@ doesn't support to use the receiver cairo target as the source. */
                          : (int *)x
                          : (int *)y
 {
-  NSDebugLLog(@"OpalGState", @"%p (%@): %s", self, [self class], __PRETTY_FUNCTION__);
+  NSDebugLLog(@"OpalGState", @"%p (%@): %s -- cgctx %p", self, [self class], __PRETTY_FUNCTION__, CGCTX);
 
   if (x)
     *x = offset.x;
@@ -1058,7 +1058,7 @@ doesn't support to use the receiver cairo target as the source. */
 
 - (void) DPSgsave
 {
-  NSDebugLLog(@"OpalGState", @"%p (%@): %s", self, [self class], __PRETTY_FUNCTION__);
+  NSDebugLLog(@"OpalGState", @"%p (%@): %s -- cgctx %p", self, [self class], __PRETTY_FUNCTION__, CGCTX);
   if (CGCTX)
     {
       CGContextSaveGState(CGCTX);
@@ -1067,7 +1067,7 @@ doesn't support to use the receiver cairo target as the source. */
 
 - (void) DPSgrestore
 {
-  NSDebugLLog(@"OpalGState", @"%p (%@): %s", self, [self class], __PRETTY_FUNCTION__);
+  NSDebugLLog(@"OpalGState", @"%p (%@): %s -- cgctx %p", self, [self class], __PRETTY_FUNCTION__, CGCTX);
   if (CGCTX)
     {
       CGContextRestoreGState(CGCTX);
@@ -1080,7 +1080,7 @@ doesn't support to use the receiver cairo target as the source. */
 
 - (void *) saveClip
 {
-  NSDebugLLog(@"OpalGState", @"%p (%@): %s", self, [self class], __PRETTY_FUNCTION__);
+  NSDebugLLog(@"OpalGState", @"%p (%@): %s -- cgctx %p", self, [self class], __PRETTY_FUNCTION__, CGCTX);
   CGRect * r = calloc(sizeof(CGRect), 1);
   *r = CGContextGetClipBoundingBox(CGCTX);
   return r;
@@ -1088,7 +1088,7 @@ doesn't support to use the receiver cairo target as the source. */
 
 - (void) restoreClip: (void *)savedClip
 {
-  NSDebugLLog(@"OpalGState", @"%p (%@): %s", self, [self class], __PRETTY_FUNCTION__);
+  NSDebugLLog(@"OpalGState", @"%p (%@): %s -- cgctx %p", self, [self class], __PRETTY_FUNCTION__, CGCTX);
   OPContextResetClip(CGCTX);
   CGContextClipToRect(CGCTX, *(CGRect *)savedClip);
   free(savedClip);
