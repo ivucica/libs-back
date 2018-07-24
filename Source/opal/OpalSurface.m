@@ -214,7 +214,7 @@ static CGContextRef createCGBitmapContext(int pixelsWide,
 
   CGContextDrawImage(_x11CGContext, cgRect, subImage);
 
-#if 0
+#if 1
 #warning Saving debug images
   [self _saveImage: backingImage withPrefix:@"/tmp/opalback-backing-" size: CGSizeZero];
   [self _saveImage: subImage withPrefix:@"/tmp/opalback-subimage-" size: subimageCGRect.size ];
