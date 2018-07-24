@@ -234,4 +234,9 @@
   return [surface CGContext];
 }
 
+- (BOOL)supportsDevicelessSurface
+{
+  return YES;
+}
+
 @end

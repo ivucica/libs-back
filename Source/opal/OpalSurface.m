@@ -80,11 +80,20 @@ static CGContextRef createCGBitmapContext(int pixelsWide,
       NSLog(@"FIXME: Replacement of OpalSurface %p's CGContexts (x11=%p,backing=%p) without transfer of gstate", self, _x11CGContext, _backingCGContext);
     }
 
-  Display * display = _gsWindowDevice->display;
-  Window window = _gsWindowDevice->ident;
+  if (_gsWindowDevice)
+    {
+      Display * display = _gsWindowDevice->display;
+      Window window = _gsWindowDevice->ident;
 
-  _x11CGContext = ctx ?: OPX11ContextCreate(display, window);
+      _x11CGContext = ctx ?: OPX11ContextCreate(display, window);
+    }
+  else
+    {
+      _x11CGContext = ctx;
+    }
+  [ctx retain];
 
+  size_t w, h;
 #if 0
   if (_gsWindowDevice->type == NSBackingStoreNonretained)
     {
@@ -101,17 +110,29 @@ static CGContextRef createCGBitmapContext(int pixelsWide,
 
       // Ask XGServerWindow to call +[OpalContext handleExposeRect:forDriver:]
       // to let us handle the back buffer -> front buffer copy using Opal.
-      _gsWindowDevice->gdriverProtocol |= GDriverHandlesExpose | GDriverHandlesBacking;
-      _gsWindowDevice->gdriver = self;
+      if (_gsWindowDevice)
+        {
+          _gsWindowDevice->gdriverProtocol |= GDriverHandlesExpose | GDriverHandlesBacking;
+          _gsWindowDevice->gdriver = self;
 
-      _backingCGContext = createCGBitmapContext(
-                       _gsWindowDevice->buffer_width,
-                       _gsWindowDevice->buffer_height);
+	  w = _gsWindowDevice->buffer_width;
+	  h = _gsWindowDevice->buffer_height;
+        }
+      else
+        {
+          w = CGBitmapContextGetWidth(ctx);
+          h = CGBitmapContextGetHeight(ctx);
+        }
+    }
+  _backingCGContext = createCGBitmapContext(w, h);
+  if (_backingCGContext == nil)
+    {
+      NSLog(@"failed to create a backing cg context");
+      abort();
     }
 
   NSDebugLLog(@"OpalSurface", @"Created CGContexts: X11=%p, backing=%p, width=%d height=%d",
-              _x11CGContext, _backingCGContext, _gsWindowDevice->buffer_width, _gsWindowDevice->buffer_height);
-
+              _x11CGContext, _backingCGContext, w, h);
 }
 
 // FIXME: *VERY* bad things will happen if a non-bitmap
@@ -129,6 +150,13 @@ static CGContextRef createCGBitmapContext(int pixelsWide,
   [self createCGContextsWithSuppliedBackingContext: ctx];
 
   return self;
+}
+
+- (void) dealloc
+{
+  [_x11CGContext release];
+  [_backingCGContext release];
+  [super dealloc];
 }
 
 - (void *) device
@@ -162,7 +190,16 @@ static CGContextRef createCGBitmapContext(int pixelsWide,
   CGRect cgRect = CGRectMake(rect.origin.x, rect.origin.y,
                       rect.size.width, rect.size.height);
   cgRect = CGRectIntegral(cgRect);
-  cgRect = CGRectIntersection(cgRect, CGRectMake(0, 0, CGImageGetWidth(backingImage), CGImageGetHeight(backingImage)));
+  CGRect backingImageBounds = CGRectMake(0, 0, CGImageGetWidth(backingImage), CGImageGetHeight(backingImage));
+  NSDebugLLog(@"OpalSurface", @"-> intersecting %@ with %@", NSStringFromRect(cgRect), NSStringFromRect(backingImageBounds));
+  cgRect = CGRectIntersection(cgRect, backingImageBounds);
+  if (isnan(cgRect.origin.x) || isnan(cgRect.origin.y) || isnan(cgRect.size.width) || isnan(cgRect.size.height))
+    {
+      NSDebugLLog(@"OpalSurface", @"refusing to expose invisible clip");
+      CGImageRelease(backingImage);
+      return;
+    }
+  NSDebugLLog(@"OpalSurface", @"--> that's %@", NSStringFromRect(cgRect));
 
   CGRect subimageCGRect = cgRect;
   CGImageRef subImage = CGImageCreateWithImageInRect(backingImage, subimageCGRect);
@@ -192,9 +229,14 @@ static CGContextRef createCGBitmapContext(int pixelsWide,
 {
 #if 1
 #warning Opal bug: cannot properly save subimage created with CGImageCreateWithImageInRect()
-  if (size.width != 0 || size.height != 0)
+  if (size.width != 0 && size.height != 0)
     {
       CGContextRef tmp = createCGBitmapContext(size.width, size.height);
+      if (tmp == NULL)
+	{
+	  NSLog(@"failed to create a CGBitmapContext %g x %g", size.width, size.height);
+	  abort();
+	}
       CGContextDrawImage(tmp, CGRectMake(0, 0, size.width, size.height), img);
       img = CGBitmapContextCreateImage(tmp);
       [(id)img autorelease];
@@ -222,8 +264,8 @@ static CGContextRef createCGBitmapContext(int pixelsWide,
 
 - (NSSize) size
 {
-  return NSMakeSize(_gsWindowDevice->buffer_width,
-                    _gsWindowDevice->buffer_height);
+  return NSMakeSize(CGBitmapContextGetWidth(_backingCGContext),
+                    CGBitmapContextGetHeight(_backingCGContext));
 }
 
 @end
