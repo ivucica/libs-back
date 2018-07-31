@@ -56,6 +56,13 @@
   return [OpalGState class];
 }
 
++ (NSGraphicsContext *)graphicsContextWithGraphicsPort: (void *)port
+{
+  NSGraphicsContext *new = [super graphicsContextWithGraphicsPort: port];
+  [new GSSetDevice: nil : 0 : 0];
+  return new;
+}
+
 - (BOOL) supportsDrawGState
 {
   return YES;
@@ -232,11 +239,6 @@
 
   [OGSTATE GSCurrentSurface: &surface : NULL : NULL];
   return [surface CGContext];
-}
-
-- (BOOL)supportsDevicelessSurface
-{
-  return YES;
 }
 
 @end
