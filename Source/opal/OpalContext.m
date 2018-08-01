@@ -42,6 +42,16 @@
 #endif
 
 @implementation OpalContext
+- (id) initWithContextInfo: (NSDictionary *)info
+{
+  self = [super initWithContextInfo: info];
+  if (!self)
+    return nil;
+
+  NSDebugLLog(@"OpalContext", @"=> setting up a new graphics context with a port <=");
+
+  return self;
+}
 
 + (void) initializeBackend
 {
@@ -56,11 +66,10 @@
   return [OpalGState class];
 }
 
-+ (NSGraphicsContext *)graphicsContextWithGraphicsPort: (void *)port
+- (void) setupGraphicsPort
 {
-  NSGraphicsContext *new = [super graphicsContextWithGraphicsPort: port];
-  [new GSSetDevice: nil : 0 : 0];
-  return new;
+  NSDebugLLog(@"OpalContext", @"=> setting up a new graphics context with a port <=");
+  [self GSSetDevice: nil : 0 : 0];
 }
 
 - (BOOL) supportsDrawGState
@@ -230,6 +239,7 @@
 - (NSInteger) GSDefineGState
 {
   // FIXME
+  NSDebugLLog(@"OpalContext", @"%p (%@): %s (WARNING: unimplemented)", self, [self class], __PRETTY_FUNCTION__);
   return [super GSDefineGState];
 }
 

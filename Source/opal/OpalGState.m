@@ -57,10 +57,11 @@ static inline NSPoint _NSPointFromCGPoint(CGPoint cgpoint)
 
 - (id)copyWithZone: (NSZone *)zone
 {
-  NSDebugLLog(@"OpalGState", @"%p (%@): %s -- cgctx %p", self, [self class], __PRETTY_FUNCTION__, CGCTX);
   OpalGState * theCopy = (OpalGState *) [super copyWithZone: zone];
   CGContextRef cgctx = CGCTX;
+  NSDebugLLog(@"OpalGState", @"%p (%@): %s -- copying into %p -- cgctx %p", self, [self class], __PRETTY_FUNCTION__, theCopy, CGCTX);
 
+  // TODO(ivucica): when does this _opalSurface get released?
   [_opalSurface retain];
   if (cgctx)
     {
@@ -1024,7 +1025,7 @@ doesn't support to use the receiver cairo target as the source. */
 {
   if (!_opalSurface)
     {
-      NSDebugMLLog(@"OpalGState", @"No OpalSurface");
+      NSDebugMLLog(@"OpalGState", @"%p (%@): %s -- No OpalSurface, so returning nil", self, [self class], __PRETTY_FUNCTION__);
       return nil;
     }
   else
@@ -1033,7 +1034,7 @@ doesn't support to use the receiver cairo target as the source. */
 
       if (!context)
         {
-          NSDebugMLLog(@"OpalGState", @"No OpalSurface CGContext");
+          NSDebugMLLog(@"OpalGState", @"%p (%@): %s -- No OpalSurface CGContext, so returning nil", self, [self class], __PRETTY_FUNCTION__);
           return nil;
         }
       return context;

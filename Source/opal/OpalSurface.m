@@ -28,6 +28,8 @@
 #import "opal/OpalSurface.h"
 #import "x11/XGServerWindow.h"
 
+static BOOL saveImages = 0;
+
 /* TODO: expose these from within opal */
 extern CGContextRef OPX11ContextCreate(Display *display, Drawable drawable);
 extern void OPContextSetSize(CGContextRef ctx, CGSize s);
@@ -70,6 +72,11 @@ static CGContextRef createCGBitmapContext(int pixelsWide,
 
 @implementation OpalSurface
 
++ (void) setSaveImages: (BOOL) saveImagesNew
+{
+  saveImages = saveImagesNew;
+}
+
 - (void) createCGContextsWithSuppliedBackingContext: (CGContextRef)ctx
 {
   // FIXME: this method and class presumes we are being passed
@@ -85,13 +92,12 @@ static CGContextRef createCGBitmapContext(int pixelsWide,
       Display * display = _gsWindowDevice->display;
       Window window = _gsWindowDevice->ident;
 
-      _x11CGContext = ctx ?: OPX11ContextCreate(display, window);
+      _x11CGContext = CGContextRetain(ctx) ?: OPX11ContextCreate(display, window);
     }
   else
     {
-      _x11CGContext = ctx;
+      _x11CGContext = CGContextRetain(ctx);
     }
-  [ctx retain];
 
   size_t w, h;
 #if 0
@@ -214,11 +220,11 @@ static CGContextRef createCGBitmapContext(int pixelsWide,
 
   CGContextDrawImage(_x11CGContext, cgRect, subImage);
 
-#if 1
-#warning Saving debug images
-  [self _saveImage: backingImage withPrefix:@"/tmp/opalback-backing-" size: CGSizeZero];
-  [self _saveImage: subImage withPrefix:@"/tmp/opalback-subimage-" size: subimageCGRect.size ];
-#endif
+  if (saveImages)
+    {
+      [self _saveImage: backingImage withPrefix:@"/tmp/opalback-backing-" size: CGSizeZero];
+      [self _saveImage: subImage withPrefix:@"/tmp/opalback-subimage-" size: subimageCGRect.size ];
+    }
 
   CGImageRelease(backingImage);
   CGImageRelease(subImage);
