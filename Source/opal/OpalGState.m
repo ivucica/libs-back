@@ -617,7 +617,7 @@ static inline NSPoint _NSPointFromCGPoint(CGPoint cgpoint)
 
 - (void) DPSrectfill: (CGFloat)x : (CGFloat)y : (CGFloat)w : (CGFloat)h
 {
-  NSDebugLLog(@"OpalGState", @"%p (%@): %s - rect %g %g %g %g", self, [self class], __PRETTY_FUNCTION__, x, y, w, h);
+  NSDebugLLog(@"OpalGState", @"%p (%@): %s - rect %g %g %g %g (DRAWING INTO %p)", self, [self class], __PRETTY_FUNCTION__, x, y, w, h, self->drawcontext);
   CGContextRef cgctx = CGCTX;
 
   if (cgctx)

@@ -48,8 +48,6 @@
   if (!self)
     return nil;
 
-  NSDebugLLog(@"OpalContext", @"=> setting up a new graphics context with a port <=");
-
   return self;
 }
 
@@ -68,7 +66,7 @@
 
 - (void) setupGraphicsPort
 {
-  NSDebugLLog(@"OpalContext", @"=> setting up a new graphics context with a port <=");
+  NSDebugLLog(@"OpalContext", @"=> setting up a new graphics context %p with port %p <=", self, self->_graphicsPort);
   [self GSSetDevice: nil : 0 : 0];
 }
 
